@@ -55,26 +55,26 @@ Wrong password
 
 The next step is to take a look at the functions present in the binary, we can do that with a tool called `readelf`. Looking a the functions in the binary by running the command `readelf -s <crackme> | grep FUNC` we can see that the only function thats of interest is the `main` function.
 
-![Readelf](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Readelf.png)
+![Readelf](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Readelf.png)
 
 
 ### Binary Ninja - Decompilation
 
 Now that we know what to look for we can jump right into a disassembler/decompiler and start figuring out what the binary does. I will be using Binary ninja to view the decompilation of the binary but any other disassembler/decompiler should work just fine.
 
-![Split-view](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Split-view.png)
+![Split-view](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Split-view.png)
 
 Looking at the split view we can see that the main function isn't that large, which means that reversing it will be quick and easy. On the right hand side we can see the linear view of the main function in HLIL (High level IL). Let's step through the code and figure out what it's doing.
 
-![Main](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Pseudo-C.png)
+![Main](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Pseudo-C.png)
 
 Going from HLIL to Pseudo C cleans up the decompilation a bit and makes our lives easier. First of all we can see that on the third line the binary prints to stdout using `printf()` and then asks the user for a username, after the user provides the username it proceeds to ask the user to input a number between 1 and 9 and lastly it asks the user for a password. After renaming a copule of variables we should have something that looks like this.
 
-![Scanf-rename](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/scanf-rev.png)
+![Scanf-rename](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/scanf-rev.png)
 
 Going a little further down the function we come across an if/else statement and a while loop. After a little bit of thinking and reasoning we should have something similar-looking to this.
 
-![Reversed](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Reversed.png)
+![Reversed](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Reversed.png)
 
 
 Let's break it down.
@@ -83,7 +83,7 @@ Let's break it down.
 ### Breaking down the algorithm
 
 
-![Breakdown](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Detail.png)
+![Breakdown](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Detail.png)
 
 
 We already know that we cannot input any number lower or greater than 9, with that in mind we can move to the while loop and break that loop down to small snippets to comprehend the full picture. It starts off by comparing the lenght of the username with the incrementor/loop counter `i` If the loop counter is greater or equal to the lenght of the username string it breaks out of the loop. Our next line of code is the one we are interested in, it starts of by adding the number that the user chose to the letter indexed by `i` and then stores it in the `password_real` variable also at the `i` index, then we increment `i` each loop. When we add the number we chose to a letter stored at the index we get the letter that's x many numbers away from that letter (e.g a + 3 = d, a + 2 = c e.t.c)
@@ -98,7 +98,7 @@ o + 3 = r
 l + 3 = o
 ```
 
-![Successful-login](https://github.com/ZeroCooL-555/Crackmes/blob/master/PleaseCrackMe/Pictures/Success-login.png)
+![Successful-login](https://github.com/ZeroCooL-555/Crackmes/blob/main/PleaseCrackMe/Pictures/Success-login.png)
 
 
 
