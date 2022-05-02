@@ -88,7 +88,7 @@ Here we have a fairly nice decompilation of the binaries main function and we ca
 - `v5 ==> canary`
 
 
-### Breakdown
+## Breakdown
 
 We can see that after our first and fourth character input the program only checks individual letters ex: `105,100,110,111` so we can convert these values to ASCII and get the corresponding letters `r???idinghood`Now we only have to focus on the second, third and fourth characters of the key.
 
@@ -96,7 +96,10 @@ We can see that after our first and fourth character input the program only chec
 - `sqrt((double)v4[2]) * 5.0 == 50.0`
 - `(unsigned __int8)(v4[3] - 1) <= 0x71u`
 
-Our second character input should equal *1* when modded with the value *10*, our third character input should equal *50.0* after being squared and multiplied with the number *5* and the last check takes our input and subtracts *1* from it and compares it to a letter `113`. The square check is a very easy check for us because there is only one letter in the alphabet that equals that value and that's the letter `d`. We can verify that with a simple one-liner list comprehension in python after importing the string library `[string.ascii_letters[x] for x in range(len(string.ascii_letters)) if round((sqrt(ord(string.ascii_letters[x])) * 5.0), 1) == 50.0`
+Our second character input should equal *1* when modded with the value *10*, our third character input should equal *50.0* after being squared and multiplied with the number *5* and the last check takes our input and subtracts *1* from it and compares it to a letter `113`. The square check is a very easy check for us because there is only one letter in the alphabet that equals that value and that's the letter `d`. We can verify that with a simple one-liner list comprehension in python after importing the string library.
+```python
+[string.ascii_letters[x] for x in range(len(string.ascii_letters)) if round((sqrt(ord(string.ascii_letters[x])) * 5.0), 1) == 50.0]
+```
 Now we should have only two characters of a valid key missing `r?d?idinghood` The last two checks have multiple valid alphabetical letters so instead of finding many of them by hand we can create a program to find some of the valid variations for us.
 
 # Keygen
