@@ -79,8 +79,7 @@ Here we are in the `check_password()` function and we quickly see that our input
 
 ## Using Angr
 
-*"angr is an open-source binary analysis platform for Python. It combines both static and dynamic symbolic ("concolic") analysis, providing tools to solve a variety of tasks."* - ![angr](https://angr.io/)
-By using ![Symbolic Execution](https://www.cs.cmu.edu/~aldrich/courses/17-355-18sp/notes/notes14-symbolic-execution.pdf) and one of angr's powerful simulation managers we can let a program explore different code paths for us. Using symbolic execution is great in our case because we have a code path that we want angr to explore and find, the code path being the correct input to reach the string **Nice job :)**. Let's code
+*"angr is an open-source binary analysis platform for Python. It combines both static and dynamic symbolic ("concolic") analysis, providing tools to solve a variety of tasks."* - [angr](https://angr.io/) <br> By using [Symbolic Execution](https://www.cs.cmu.edu/~aldrich/courses/17-355-18sp/notes/notes14-symbolic-execution.pdf) and one of angr's powerful simulation managers we can let a program explore different code paths for us. Using symbolic execution is great in our case because we have a code path that we want angr to explore and find, the code path being the correct input to reach the string **Nice job :)**. Let's code
 
 ```python
 #!/usr/bin/python
